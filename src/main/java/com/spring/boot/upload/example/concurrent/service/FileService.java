@@ -42,7 +42,7 @@ public class FileService {
 
     public void uploadFilesSequentially(List<MultipartFile> files) {
 
-        files.parallelStream().forEach(this::uploadFile);
+        files.forEach(this::uploadFile);
 
     }
 

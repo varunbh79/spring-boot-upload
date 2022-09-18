@@ -35,8 +35,8 @@ public class FileController {
        // long endTime = System.currentTimeMillis();
         stopWatch.stop();
         redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded all files! Time Taken By Single Thread : "  +
-                        stopWatch.getTotalTimeNanos());
+                "You successfully uploaded all files! Time Taken By Single Thread in Nano Seconds : "  +
+                        stopWatch.getTotalTimeNanos() );
         return "redirect:/";
     }
 
@@ -48,7 +48,7 @@ public class FileController {
         fileService.uploadFilesConcurrently(multipartFiles);
         stopWatch.stop();
         redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded all files! Time Taken By Multiple Threads : "  +
+                "You successfully uploaded all files! Time Taken By Multiple Threads in Nano Seconds : "  +
                         stopWatch.getTotalTimeNanos());
 
         return "redirect:/";
