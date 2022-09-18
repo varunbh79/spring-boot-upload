@@ -28,9 +28,6 @@ public class FileController {
     @PostMapping("/files")
     public String uploadFiles(@RequestParam("files")List<MultipartFile> files, RedirectAttributes redirectAttributes) {
 
-       /* Arrays.asList(files)
-                .stream()
-                .forEach(file -> fileService.uploadFile(file));*/
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
      //   long startTime = System.currentTimeMillis();
@@ -39,8 +36,7 @@ public class FileController {
         stopWatch.stop();
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded all files! Time Taken By Single Thread : "  +
-                        stopWatch.getTotalTimeSeconds());
-        //System.out.println(stopWatch.getTotalTimeSeconds());
+                        stopWatch.getTotalTimeNanos());
         return "redirect:/";
     }
 
@@ -53,7 +49,7 @@ public class FileController {
         stopWatch.stop();
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded all files! Time Taken By Multiple Threads : "  +
-                        stopWatch.getTotalTimeMillis());
+                        stopWatch.getTotalTimeNanos());
 
         return "redirect:/";
     }
