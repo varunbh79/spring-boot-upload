@@ -53,7 +53,7 @@ public class FileController {
         stopWatch.stop();
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded all files! Time Taken By Multiple Threads : "  +
-                        stopWatch.getTotalTimeSeconds());
+                        stopWatch.getTotalTimeMillis());
 
         return "redirect:/";
     }

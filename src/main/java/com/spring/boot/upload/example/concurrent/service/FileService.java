@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 @Service
 public class FileService {
 
-    @Value("${app.upload.dir:D:\\UserData\\z004c92v\\uploads}")
+    @Value("${app.upload.dir:D:\\uploads}")
     public String uploadDir;
 
     private final ExecutorService executorService = Executors
@@ -48,15 +48,23 @@ public class FileService {
 
     public void uploadFilesConcurrently(List<MultipartFile> multipartFiles) {
 
+        if(Files.notExists(Paths.get(uploadDir))) {
+            try {
+                Files.createDirectory(Paths.get(uploadDir));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
             multipartFiles
-                .parallelStream()
-                .forEach(file -> {
-                    try {
-                            CompletableFuture.runAsync(()->retrieveFutureObject(file)).get();
-                          } catch (InterruptedException | ExecutionException e) {
-                              System.out.println(e.getMessage());
-                          }
-                      });
+                    .parallelStream()
+                    .forEach(file -> {
+                        try {
+                            CompletableFuture.runAsync(() -> retrieveFutureObject(file)).get();
+                        }  catch (InterruptedException | ExecutionException exception) {
+                            System.out.println(exception.getMessage());
+                        }
+                    });
+
     }
 
     private void retrieveFutureObject(MultipartFile file) throws FileStorageException {
@@ -69,10 +77,9 @@ public class FileService {
 
     private long copyFileToDestination(Path copyLocation,MultipartFile file)  {
         try {
-            System.out.println(copyLocation.getFileName());
             return Files.copy(file.getInputStream(),copyLocation, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            throw new FileStorageException("File Not Found");
+            throw new FileStorageException(e.getMessage());
         }
     }
 }
