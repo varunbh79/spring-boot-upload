@@ -1,0 +1,1 @@
+web: java -jar target/Spring-Boot-Upload-File-0.0.1-SNAPSHOT.jar

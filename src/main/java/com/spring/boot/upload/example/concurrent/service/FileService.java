@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 @Service
 public class FileService {
 
-    @Value("${app.upload.dir:D:\\uploads}")
+    @Value("${app.upload.dir:src/main/resources/uploads}")
     public String uploadDir;
 
     private final ExecutorService executorService = Executors
